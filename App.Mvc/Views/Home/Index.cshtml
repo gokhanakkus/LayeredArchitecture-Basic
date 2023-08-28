@@ -1,0 +1,49 @@
+﻿@model IEnumerable<App.Data.Entities.ProductEntity>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-4 mt-2">
+            <div class="card">
+                <img src="@product.ImageUrl" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: <span class="price">@product.Price.ToString("C")</span></p>
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <div class="d-flex">
+                            <div class="form-group pr-2" style="flex: 1;">
+                                <label for="quantity_@product.Id">Quantity:</label>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="decrementQuantity('quantity_@product.Id')">-</button>
+                                    <input type="number" name="quantity" id="quantity_@product.Id" value="1" min="1" class="form-control quantity-input" />
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="incrementQuantity('quantity_@product.Id')">+</button>
+                                </div>
+                            </div>
+                            <div class="form-group" style="flex: 2;">
+                                <label for="cartId_@product.Id">Select Cart:</label>
+                                <select name="cartId" class="form-control" id="cartId_@product.Id">
+                                    @if (ViewBag.UserCarts != null)
+                                    {
+                                        foreach (var cart in ViewBag.UserCarts)
+                                        {
+                                            <option value="@cart.Id">@cart.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="productId" value="@product.Id" />
+
+                        <div class="notification" style="display: none;">
+                            &#10004;&#65039; Product added to cart !
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3" onclick="showNotification(this)">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,98 @@
+﻿@model App.Data.Entities.CartEntity
+
+@{
+    ViewData["Title"] = "Cart Detail";
+}
+
+<h2 class ="display-4">Cart Detail</h2>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="form-group">
+            <label for="cartId"><strong>Cart ID:</strong></label>
+            <input type="text" class="form-control" id="cartId" value="@Model.Id" readonly>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="cartName"><strong>Cart Name:</strong></label>
+            <input type="text" class="form-control" id="cartName" value="@Model.Name" readonly>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="createdAt"><strong>Created At:</strong></label>
+            <input type="text" class="form-control" id="createdAt" value="@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
+        </div>
+    </div>
+</div>
+
+@if (Model.CartItems.Any())
+{
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cartItem in Model.CartItems)
+            {
+                <tr>
+                    <td>@cartItem.ProductId</td>
+                    <td>@cartItem.Product.Name</td>
+                    <td>@cartItem.Product.Price.ToString("C")</td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="Detail" method="post">
+                            <input type="hidden" name="cartItemId" value="@cartItem.Id" />
+                            <div class="input-group">         
+                                <input type="number" min="1" id="quantityInput_@cartItem.Id" name="quantity" value="@cartItem.Quantity" readonly class="form-control input-sm quantity-input" /> 
+                            </div>
+                        </form>
+                    </td>
+                    <td class="total-price" data-cartid="@cartItem.CartId" data-price="@cartItem.Product.Price">@(cartItem.Product.Price * cartItem.Quantity)</td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="RemoveCartItem" method="post">
+                            <input type="hidden" name="cartItemId" value="@cartItem.Id" />
+                            <button type="button" class="btn btn-link text-danger" title="Delete" onclick="confirmRemoveItem('@cartItem.Product.Name', @cartItem.Id);">
+                                <img src="~/images/delete.png" alt="Delete" class="delete-icon">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between align-items-center">
+        <a asp-controller="Cart" asp-action="List" class="btn btn-primary">Back to My Carts</a>
+        <p class="me-5"><strong>Total Price: <span id="grandTotal">@Model.CartItems.Sum(cartItem => cartItem.Product.Price * cartItem.Quantity).ToString("C")</span></strong></p>
+    </div>
+}
+else
+{
+    <p>The cart is empty.</p>
+}
+
+
+<div class="modal fade" id="removeItemModal" tabindex="-1" role="dialog" aria-labelledby="removeItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeItemModalLabel">Confirm Removal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove this item from the cart?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmRemoveButton">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
