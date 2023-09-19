@@ -1,0 +1,42 @@
+.notification {
+    position: absolute;
+    top: 393px;
+    right: 47px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+    animation: fadeOut 4s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.alert {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    max-width: 300px;
+    opacity: 1;
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.fadeout {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
