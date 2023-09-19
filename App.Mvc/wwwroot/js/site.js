@@ -67,3 +67,14 @@ function showNotification(button) {
         notification.style.display = 'none';
     }, 4000);
 }
+document.querySelector('.theme-switch').addEventListener('click', () => {
+    var isDarkModeEnabled = document.body.classList.toggle('dark-mode');
+    document.cookie = `DarkMode=${isDarkModeEnabled};path=/;max-age=31536000`; // 1 yıl süreyle cookie'ye kaydet
+});
+
+window.addEventListener('load', () => {
+    var isDarkModeEnabled = document.cookie.replace(/(?:(?:^|.*;\s*)DarkMode\s*\=\s*([^;]*).*$)|^.*$/, "$1") === 'true';
+    if (isDarkModeEnabled) {
+        document.body.classList.add('dark-mode');
+    }
+});

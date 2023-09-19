@@ -48,8 +48,8 @@ namespace App.Data.Context
             );
 
             modelBuilder.Entity<UserEntity>().HasData(
-            new UserEntity { Id = 1, Name = "Gökhan", Surname = "Akkuş", Email = "akkus@akkus.com", Password = "12345" },
-            new UserEntity { Id = 2, Name = "Gökhan", Surname = "Türkmen", Email = "gokhan@gokhan.com", Password = "12345" }
+            new UserEntity { Id = 1, Name = "admin", Surname = "admin", Email = "admin@admin.com", Password = "12345" },
+            new UserEntity { Id = 2, Name = "Gökhan", Surname = "Gökhan", Email = "gokhan@gokhan.com", Password = "12345" }
 
         );
 

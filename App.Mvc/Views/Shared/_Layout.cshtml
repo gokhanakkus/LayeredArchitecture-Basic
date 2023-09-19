@@ -6,11 +6,18 @@
     <title>@ViewData["Title"] - App.Mvc</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dark-mode.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/notification.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-switch.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/App.Mvc.styles.css" asp-append-version="true" />
 </head>
-<body>
+@{
+    var isDarkModeEnabled = Context.Request.Cookies["DarkMode"] == "true";
+}
+<body class="@(isDarkModeEnabled ? "dark-mode" : "")">
     <header>
-        <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom">
+        <nav class="navbar navbar-expand-md border-bottom">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">App.Mvc</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -21,14 +28,14 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                <img src="~/images/home.gif" alt="Logout" class="nav-icon">
+                                <img src="~/images/home.png" alt="Logout" class="nav-icon">
                                 <span class="me-2">Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
-                            <img src="~/images/privacy.png" alt="Logout" class="nav-icon">
-                            <span class="me-2">Privacy</span>
+                                <img src="~/images/privacy.png" alt="Logout" class="nav-icon">
+                                <span class="me-2">Privacy</span>
                             </a>
                         </li>
                     </ul>
@@ -44,10 +51,18 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">
                                     <span class="me-2">@User.Identity.Name</span>
-                                    <img src="~/images/logout.png" alt="Logout" class="nav-icon">
+                                    <img src="~/images/logout2.png" alt="Logout" class="nav-icon">
                                     <span>Logout</span>
                                 </a>
-                            </li> 
+                            </li>
+                            <li>
+                                <button class="theme-switch">
+                                    <div class="theme-switch-toggle">
+                                        <img src="~/images/sun2.png" alt="Sun" class="sun-icon">
+                                        <img src="~/images/moon3.png" alt="Moon" class="moon-icon">
+                                    </div>
+                                </button>
+                            </li>
                         }
                         else
                         {
@@ -75,7 +90,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-light fixed-bottom">
+    <footer class="border-top footer text-muted fixed-bottom">
         <div class="container text-center py-3">
             &copy; 2023 - App.Mvc - <a class="text-muted" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

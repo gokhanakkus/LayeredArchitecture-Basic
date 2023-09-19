@@ -42,6 +42,10 @@ namespace App.Mvc.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
+                    var darkModeCookie = Request.Cookies["DarkMode"];
+                    var isDarkModeEnabled = darkModeCookie != null && bool.Parse(darkModeCookie);
+                    // isDarkModeEnabled değerine göre stilleri ayarla
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -107,6 +111,9 @@ namespace App.Mvc.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            Response.Cookies.Delete("DarkMode");
+
             return RedirectToAction("Index", "Home");
         }
     }
