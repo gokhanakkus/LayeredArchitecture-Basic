@@ -2,21 +2,21 @@
 
 This project represents the next stage of the assignment from Task 13. In this stage, we enhance the MVC project by moving the existing structure to a layered architecture, making the project more organized and manageable.
 
-Usage
+# Usage
 For example CRUD operations, you can follow the steps below:
 
 List existing items on the homepage.
 Click "Add to Cart" to add new items.
 Go to the "My Carts" page to edit or delete items.
 
-SUMMARY
+# SUMMARY
 
 Users can create multiple carts.
 Users can delete the carts they added or the items in the cart.
 Desired quantity of items can be added to the desired cart.
 Users cannot view carts of different users.
 
-DETAILS
+# DETAILS
 
 This project includes fundamental techniques such as layered architecture, dependency injection, authorization, and authentication.
 It represents an ASP.NET Core-based application shaped by modern software development approaches. Key focus areas of the application include effectively managing secure user authentication and authorization mechanisms, as well as providing dynamic and customizable shopping cart management.
